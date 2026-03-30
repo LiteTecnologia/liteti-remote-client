@@ -1,11 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 80">
-  <!-- Small icon -->
-  <rect x="4" y="4" width="72" height="72" rx="14" fill="#0ea5e9"/>
-  <rect x="18" y="18" width="44" height="30" rx="4" fill="none" stroke="white" stroke-width="4"/>
-  <line x1="40" y1="48" x2="40" y2="54" stroke="white" stroke-width="4" stroke-linecap="round"/>
-  <line x1="30" y1="54" x2="50" y2="54" stroke="white" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="40" cy="36" r="3" fill="white"/>
-  <!-- Text -->
-  <text x="92" y="52" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="700" fill="#0ea5e9">Liteti</text>
-  <text x="210" y="52" font-family="Inter, system-ui, sans-serif" font-size="32" font-weight="400" fill="#e2e8f0">Remote</text>
+<svg width="180" height="44" viewBox="0 0 180 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pixel dispersion effect (upper-left of L) -->
+  <!-- Layer 1: far scattered small pixels -->
+  <rect x="1.5" y="3" width="1.6" height="1.6" fill="#3B9FCC" opacity="0.2"/>
+  <rect x="4.5" y="1" width="1.3" height="1.3" fill="#3B9FCC" opacity="0.18"/>
+  <rect x="3" y="6" width="1.4" height="1.4" fill="#3B9FCC" opacity="0.25"/>
+  <rect x="7" y="2.5" width="1.5" height="1.5" fill="#3B9FCC" opacity="0.22"/>
+  <rect x="0.5" y="9" width="1.8" height="1.8" fill="#3B9FCC" opacity="0.28"/>
+  <!-- Layer 2: medium scattered -->
+  <rect x="5.5" y="7" width="2" height="2" fill="#3B9FCC" opacity="0.35"/>
+  <rect x="9" y="4" width="1.8" height="1.8" fill="#3B9FCC" opacity="0.32"/>
+  <rect x="2" y="12.5" width="2.2" height="2.2" fill="#3B9FCC" opacity="0.38"/>
+  <rect x="7" y="11" width="2.5" height="2.5" fill="#3B9FCC" opacity="0.42"/>
+  <rect x="11" y="6" width="2" height="2" fill="#3B9FCC" opacity="0.38"/>
+  <!-- Layer 3: closer, denser -->
+  <rect x="0" y="16" width="2.8" height="2.8" fill="#3B9FCC" opacity="0.45"/>
+  <rect x="4" y="15.5" width="3" height="3" fill="#3B9FCC" opacity="0.52"/>
+  <rect x="9" y="11.5" width="3" height="3" fill="#3B9FCC" opacity="0.58"/>
+  <rect x="12.5" y="7.5" width="2.5" height="2.5" fill="#3B9FCC" opacity="0.48"/>
+  <!-- Layer 4: merging into L -->
+  <rect x="1.5" y="21" width="3.5" height="3.5" fill="#3B9FCC" opacity="0.55"/>
+  <rect x="6" y="20" width="3.8" height="3.8" fill="#3B9FCC" opacity="0.65"/>
+  <rect x="10.5" y="16" width="3.5" height="3.5" fill="#3B9FCC" opacity="0.72"/>
+  <rect x="13.5" y="12" width="3" height="3" fill="#3B9FCC" opacity="0.6"/>
+
+  <!-- L letter -->
+  <rect x="11" y="20.5" width="4.5" height="12" fill="#4AADE0"/>
+  <rect x="14.5" y="4" width="5" height="28.5" rx="0.8" fill="#4AADE0"/>
+  <rect x="14.5" y="28" width="11" height="4.5" rx="0.8" fill="#4AADE0"/>
+
+  <!-- i letter -->
+  <rect x="28" y="16" width="4.5" height="16.5" rx="0.8" fill="#4AADE0"/>
+  <circle cx="30.2" cy="10.5" r="2.8" fill="#4AADE0"/>
+
+  <!-- t letter -->
+  <rect x="36" y="9" width="4.5" height="23.5" rx="0.8" fill="#4AADE0"/>
+  <rect x="33.5" y="16" width="9.5" height="3.8" rx="0.8" fill="#4AADE0"/>
+
+  <!-- e letter -->
+  <path d="M48 25.5C48 21.8 50.8 18.5 54.5 18.5C58.2 18.5 60.8 21.5 60.8 25.2V26.5H52C52.3 29 53.8 30.5 56 30.5C57.6 30.5 58.8 29.8 59.5 28.5H60.8C59.8 31.2 57.5 32.8 55 32.8C51 32.8 48 30 48 25.5ZM52.2 24H57.5C57.3 22 56.2 20.5 54.5 20.5C53 20.5 52.4 21.8 52.2 24Z" fill="#4AADE0"/>
+
+  <!-- t letter (gray) -->
+  <rect x="65" y="9" width="4.5" height="23.5" rx="0.8" fill="#94A3B8"/>
+  <rect x="62.5" y="16" width="9.5" height="3.8" rx="0.8" fill="#94A3B8"/>
+
+  <!-- i letter (gray) -->
+  <rect x="77" y="16" width="4.5" height="16.5" rx="0.8" fill="#94A3B8"/>
+  <circle cx="79.2" cy="10.5" r="2.8" fill="#94A3B8"/>
+
+  <!-- SOLUÇÕES EM TI subtitle badge -->
+  <rect x="55" y="36" width="96" height="7.5" rx="3.5" fill="#94A3B8" opacity="0.25"/>
+  <text x="103" y="41.8" font-family="system-ui, -apple-system, Arial, sans-serif" font-size="5" font-weight="700" fill="#94A3B8" text-anchor="middle" letter-spacing="1.5">SOLUÇÕES EM TI</text>
 </svg>
