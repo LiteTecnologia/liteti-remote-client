@@ -125,6 +125,9 @@ pub fn translate_locale(name: String, locale: &str) -> String {
             .unwrap_or_default()
             .to_owned();
     }
+    if lang.is_empty() {
+        lang = "pt".to_owned();
+    }
     let lang = lang.to_lowercase();
     let m = match lang.as_str() {
         "fr" => fr::T.deref(),

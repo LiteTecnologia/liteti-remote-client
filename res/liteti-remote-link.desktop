@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Liteti Remote
+NoDisplay=true
+MimeType=x-scheme-handler/liteti-remote;
+TryExec=liteti-remote
+Exec=liteti-remote %u
+Icon=liteti-remote
+Terminal=false
+Type=Application
+StartupNotify=false
+StartupWMClass=liteti-remote
