@@ -1,15 +1,15 @@
 [package]
-name = "liteti-remote"
+name = "rustdesk"
 version = "1.4.6"
 authors = ["Liteti Tecnologia <contato@liteti.com.br>"]
 edition = "2021"
 build= "build.rs"
 description = "Liteti Remote - Acesso Remoto Seguro"
-default-run = "liteti-remote"
+default-run = "rustdesk"
 rust-version = "1.75"
 
 [lib]
-name = "liblitetiremote"
+name = "librustdesk"
 crate-type = ["cdylib", "staticlib", "rlib"]
 
 [[bin]]
