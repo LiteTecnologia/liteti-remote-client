@@ -536,19 +536,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
           ));
         }
       }
-      if (bind.mainCurrentIsWayland()) {
-        LinuxCards.add(buildInstallCard(
-            "Warning", "wayland_experiment_tip", "", () async {},
-            marginTop: LinuxCards.isEmpty ? 20.0 : 5.0,
-            help: 'Help',
-            link: 'https://rustdesk.com/docs/en/client/linux/#x11-required'));
-      } else if (bind.mainIsLoginWayland()) {
-        LinuxCards.add(buildInstallCard("Warning",
-            "Login screen using Wayland is not supported", "", () async {},
-            marginTop: LinuxCards.isEmpty ? 20.0 : 5.0,
-            help: 'Help',
-            link: 'https://rustdesk.com/docs/en/client/linux/#login-screen'));
-      }
+      // Liteti Remote: Wayland warnings removed (informational only)
       if (LinuxCards.isNotEmpty) {
         return Column(
           children: LinuxCards,
