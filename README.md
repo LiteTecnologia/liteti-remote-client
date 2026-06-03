@@ -1,3 +1,92 @@
+<!-- ============================================================= -->
+<!-- LITETI REMOTE — build interno (não faz parte do README upstream) -->
+<!-- ============================================================= -->
+
+# 🇧🇷 Liteti Remote — Build do Instalador Windows
+
+> Guia para gerar o instalador portátil **`liteti-remote-{versão}-install.exe`** numa máquina **Windows**.
+> Este fork não compila Windows a partir do Linux — precisa rodar num Windows real (físico ou VM).
+
+## Pré-requisitos (versões conforme o CI deste repo)
+
+Instale, em uma máquina Windows x64:
+
+| Ferramenta | Versão | Observação |
+|-----------|--------|------------|
+| Visual Studio (Build Tools) | 2019/2022 | Workload **"Desktop development with C++"** (MSVC + Windows SDK) |
+| Rust | **1.75** | `rustup toolchain install 1.75` · target `x86_64-pc-windows-msvc` |
+| Flutter | **3.24.5** | canal `stable` |
+| LLVM / Clang | **15.0.6** | defina `LIBCLANG_PATH` (usado pelo bindgen) |
+| Python | 3.x | para rodar o `build.py` |
+| NASM | recente | no `PATH` (necessário para o vcpkg compilar aom/ffmpeg) |
+| vcpkg | commit `120deac3062162151622ca4860575a33844ba10b` | defina `VCPKG_ROOT` |
+
+Dependências C++ via vcpkg (triplet **`x64-windows-static`**):
+
+```powershell
+vcpkg install libvpx:x64-windows-static libyuv:x64-windows-static opus:x64-windows-static aom:x64-windows-static
+```
+
+> **Fonte de verdade do ambiente:** o job `build-for-windows-flutter` em
+> [`.github/workflows/flutter-build.yml`](.github/workflows/flutter-build.yml). Em caso de dúvida, siga os passos de lá.
+
+## Passos específicos do RustDesk (fáceis de esquecer — sem eles o build quebra)
+
+**1. Substituir o Flutter engine pelo engine custom** (após instalar o Flutter 3.24.5):
+
+```powershell
+flutter precache --windows
+Invoke-WebRequest -Uri https://github.com/rustdesk/engine/releases/download/main/windows-x64-release.zip -OutFile windows-x64-release.zip
+Expand-Archive -Path windows-x64-release.zip -DestinationPath windows-x64-release
+# substitua <FLUTTER> pelo diretório da sua instalação do Flutter:
+mv -Force windows-x64-release/* <FLUTTER>/bin/cache/artifacts/engine/windows-x64-release/
+```
+
+**2. Aplicar o patch do Flutter** (na raiz da instalação do Flutter):
+
+```bash
+cp .github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff <FLUTTER>
+cd <FLUTTER> && git apply flutter_3.24.4_dropdown_menu_enableFilter.diff
+```
+
+**3. Gerar os bridge files** (NÃO são commitados e NÃO são gerados pelo build no Windows):
+
+```bash
+git clone https://github.com/SoLongAndThanksForAllThePizza/flutter_rust_bridge --depth=1
+cd flutter_rust_bridge/frb_codegen && cargo install --path . && cd ../..
+cd flutter && flutter pub get && cd ..
+flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart
+```
+
+## Build (Liteti)
+
+Na raiz do repositório, com o ambiente acima pronto:
+
+```powershell
+git checkout feature/liteti-branding
+git pull
+git submodule update --init --recursive
+python3 build.py --flutter --portable
+```
+
+> Os flags `--hwcodec` e `--vram` (usados no CI) habilitam codec de hardware/VRAM, mas exigem setup extra. Para o **primeiro** build, pode deixá-los de fora — não afetam o branding.
+
+**Saída esperada** (ao final):
+
+```
+output location: ...\liteti-remote-1.4.6-install.exe
+```
+
+## Verificação do artefato
+
+1. O arquivo `liteti-remote-1.4.6-install.exe` aparece na raiz do repositório.
+2. Botão direito → Propriedades → Detalhes: **ProductName = "Liteti Remote"**, **FileDescription = "Liteti Remote - Acesso Remoto Seguro"**.
+3. Rodar o instalador; confirmar que o app abre e usa o servidor de ID/relay da Liteti.
+
+> ℹ️ O bug de nomes que impedia o build no Windows (o `build.py` procurava `liblitetiremote.dll` / `liteti-remote.exe` que não existem) **já foi corrigido nesta branch**. Se aparecer um erro de "arquivo não encontrado" com algum nome `liteti-*` durante o build, avise — pode ser um ponto remanescente.
+
+---
+
 <p align="center">
   <img src="res/logo-header.svg" alt="RustDesk - Your remote desktop"><br>
   <a href="#raw-steps-to-build">Build</a> •
