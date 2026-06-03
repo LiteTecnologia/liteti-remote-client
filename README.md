@@ -87,6 +87,66 @@ output location: ...\liteti-remote-1.4.6-install.exe
 
 ---
 
+# 🐧 Liteti Remote — Build do Pacote Linux (.deb)
+
+> Guia para gerar e instalar o **`liteti-remote-{versão}.deb`** (testado em Ubuntu x64).
+
+## Pré-requisitos
+
+| Ferramenta | Versão | Observação |
+|-----------|--------|------------|
+| Rust | 1.75+ | via `rustup` |
+| Flutter | **3.24.5** | **pinado por tag** + patch — passos abaixo; versões mais novas **não compilam** este código |
+| Python | 3.x | roda o `build.py` |
+| vcpkg | recente | com `VCPKG_ROOT` definido |
+| Deps de sistema | — | lista completa no [`Dockerfile`](Dockerfile): `libgtk-3-dev`, `libxcb-*`, `libxdo-dev`, `libxfixes-dev`, `libasound2-dev`, `libpulse-dev`, `libpam0g-dev`, `nasm`, `yasm`, `clang`… |
+
+Dependências C++ via vcpkg (triplet `x64-linux`):
+
+```bash
+$VCPKG_ROOT/vcpkg install libvpx libyuv opus aom
+```
+
+## Pinar o Flutter em 3.24.5 (obrigatório)
+
+Flutter ≥3.27 quebra o build (`DialogTheme`→`DialogThemeData`, `SelectionHandler`, `google_fonts`):
+
+```bash
+cd <SEU_FLUTTER_SDK>            # ex.: ~/develop/flutter
+git checkout -- . && git fetch --tags && git checkout 3.24.5
+./bin/flutter --version         # baixa o Dart SDK da versão
+
+# patch exigido pelo RustDesk nessa versão:
+cp <REPO>/.github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff .
+git apply flutter_3.24.4_dropdown_menu_enableFilter.diff
+
+cd <REPO>/flutter && flutter clean && flutter pub get
+```
+
+## Build
+
+```bash
+cd <REPO>
+git submodule update --init --recursive
+export VCPKG_ROOT=$HOME/vcpkg            # ajuste para o seu caminho
+export CXXFLAGS="-include cstdint"       # necessário com GCC >= 13 (libwebm legado)
+python3 build.py --flutter
+```
+
+Saída: **`liteti-remote-{versão}.deb`** na raiz do repositório.
+
+## Instalar
+
+```bash
+sudo apt install ./liteti-remote-1.4.6.deb
+```
+
+> ⚠️ Se a **mesma versão** já estiver instalada, o apt **pula** silenciosamente ("already the newest version" / `Not Upgrading: 1`). Para forçar: `sudo apt install --reinstall ./liteti-remote-1.4.6.deb`.
+
+**Verificação:** `dpkg -l liteti-remote` deve mostrar `ii`; `systemctl status liteti-remote` ativo; app **"Liteti Remote"** na busca do desktop (relogue a sessão se não aparecer de imediato).
+
+---
+
 <p align="center">
   <img src="res/logo-header.svg" alt="RustDesk - Your remote desktop"><br>
   <a href="#raw-steps-to-build">Build</a> •
