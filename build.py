@@ -434,7 +434,7 @@ def build_flutter_arch_manjaro(version, features):
 def build_flutter_windows(version, features, skip_portable_pack):
     if not skip_cargo:
         system2(f'cargo build --features {features} --lib --release')
-        if not os.path.exists("target/release/liblitetiremote.dll"):
+        if not os.path.exists("target/release/librustdesk.dll"):
             print("cargo build failed, please check rust source code.")
             exit(-1)
     os.chdir('flutter')
@@ -447,13 +447,13 @@ def build_flutter_windows(version, features, skip_portable_pack):
     os.chdir('libs/portable')
     system2('pip3 install -r requirements.txt')
     system2(
-        f'python3 ./generate.py -f ../../{flutter_build_dir_2} -o . -e ../../{flutter_build_dir_2}/liteti-remote.exe')
+        f'python3 ./generate.py -f ../../{flutter_build_dir_2} -o . -e ../../{flutter_build_dir_2}/rustdesk.exe')
     os.chdir('../..')
     if os.path.exists('./liteti-remote_portable.exe'):
-        os.replace('./target/release/liteti-remote-portable-packer.exe',
+        os.replace('./target/release/rustdesk-portable-packer.exe',
                    './liteti-remote_portable.exe')
     else:
-        os.rename('./target/release/liteti-remote-portable-packer.exe',
+        os.rename('./target/release/rustdesk-portable-packer.exe',
                   './liteti-remote_portable.exe')
     print(
         f'output location: {os.path.abspath(os.curdir)}/liteti-remote_portable.exe')
